@@ -2,23 +2,18 @@
  * @Author: 张驰阳
  * @Date:   2016-12-22 15:11:46
  * @Last Modified by:   张驰阳
- * @Last Modified time: 2016-12-22 16:29:30
+ * @Last Modified time: 2016-12-22 17:00:57
  */
 
 'use strict';
 
 var express = require("express");
 var app = express();
+var fortune=require("./lib/fortune.js");
 //设置handlebars试图引擎
 var handlebars = require("express3-handlebars").create({ defaultLayout: "main" }); //默认布局
 
-var fortunes = [
-    "Conquer your fears or they will conquer you.",
-    "Rivers need springs.",
-    "Do not fear what you don't know.",
-    "You will have a pleasant surprise.",
-    "Whenever possible, keep it simple.",
-];
+
 app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
 
@@ -32,9 +27,9 @@ app.get("/", function(req, res) {
     res.render("home")
 });
 app.get("/about", function(req, res) {
-    var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
 
-    res.render("about", { fortune: randomFortune })
+
+    res.render("about",{fortune:fortune.getFortune()});
 });
 
 
